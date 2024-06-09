@@ -2,12 +2,12 @@
 
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import Main from "@/components/page/main";
+import List from "@/components/page/list";
 
 const Home = () => {
     return <div style={{display: "flex", flexDirection: "column"}}>
         <Header />
-        <Main />
+        <List />
         <Footer />
     </div>;
 };

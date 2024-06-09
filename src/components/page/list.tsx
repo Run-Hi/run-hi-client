@@ -5,7 +5,7 @@ import pretendardFont from "@/components/fonts/pretendardFont";
 import StarRate from "@/components/starRate";
 
 
-const Main = () => {
+const List = () => {
     return <StyledMainLayout>
         <StyledFilteringTitle>
             <StyledFilteringLogo>
@@ -304,4 +304,4 @@ const testData = [
 ]
 
 
-export default Main
+export default List
