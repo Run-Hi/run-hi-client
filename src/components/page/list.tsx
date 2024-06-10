@@ -129,7 +129,7 @@ const Card = (props: CardDto) => {
             <CardBarBottom>
                 <CardPlace>경주</CardPlace>
                 <StarContainer>
-                    <StarRate />
+                    <StarRate AvrRate={67} height={19} width={20}/>
                     <StarValue>({props.card.starCount})</StarValue>
                 </StarContainer>
             </CardBarBottom>
@@ -207,7 +207,6 @@ const StyledMainLayout = styled.div`
     flex-direction: column;
     width: 100%;
     height: 100%;
-    
 `
 
 const StyledFilteringTitle = styled.div`

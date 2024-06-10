@@ -5,7 +5,7 @@ import Footer from "@/components/footer";
 import List from "@/components/page/list";
 
 const Home = () => {
-    return <div style={{display: "flex", flexDirection: "column"}}>
+    return <div>
         <Header />
         <List />
         <Footer />
