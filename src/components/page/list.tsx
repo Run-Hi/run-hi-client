@@ -3,9 +3,32 @@ import Image from "next/image";
 import font from "@/components/fonts/boldFont";
 import pretendardFont from "@/components/fonts/pretendardFont";
 import StarRate from "@/components/starRate";
+import {useRouter, useSearchParams} from "next/navigation";
+import {useEffect, useState} from "react";
 
 
 const List = () => {
+
+    const [place, setPlace] = useState('')
+    const [accepting, setAccepting] = useState(false)
+    const [filtering, setFiltering] = useState('')
+    const [search, setSearch] = useState('')
+
+
+    useEffect(() => {
+
+    }, [place, accepting, filtering])
+
+    const router = useRouter();
+    const params = useSearchParams();
+
+    const handleSearchChanged = () => {
+        setAccepting(false)
+        setPlace('전체')
+        setFiltering("NONE")
+        router.push(`/?name=` + encodeURIComponent(search));
+    };
+
     return <StyledMainLayout>
         <StyledFilteringTitle>
             <StyledFilteringLogo>
@@ -18,22 +41,47 @@ const List = () => {
             </StyledErrorButton>
         </StyledFilteringTitle>
         <StyledFilteringBar>
-            <StyledLocationButton>
-                <Image src={"/assets/svgs/unChecked.svg"} alt={"unchecked"} width={18} height={18}/>
+            <StyledLocationButton onClick={() => setAccepting(!accepting)}>
+                {accepting ? <Image src={"/assets/svgs/checked.svg"} alt={"unchecked"} width={18} height={18}/> :
+                    <Image src={"/assets/svgs/unChecked.svg"} alt={"unchecked"} width={18} height={18}/>}
                 <StyledAcceptingSpan>접수중</StyledAcceptingSpan>
             </StyledLocationButton>
-            <StyledLocationFilter>
-                <StyledFilterSpan>지역 선택하기</StyledFilterSpan>
-                <Image src={"/assets/svgs/arrow.svg"} alt={"arrow"} width={20} height={20}/>
+            <StyledLocationFilter value={place} onChange={e => {
+                setPlace(e.target.value)
+            }}>
+                <option>전체</option>
+                <option>서울</option>
+                <option>부산</option>
+                <option>대구</option>
+                <option>인천</option>
+                <option>대전</option>
+                <option>광주</option>
+                <option>울산</option>
+                <option>강원</option>
+                <option>경기</option>
+                <option>경남</option>
+                <option>경북</option>
+                <option>전남</option>
+                <option>전북</option>
+                <option>제주</option>
+                <option>충남</option>
+                <option>충북</option>
             </StyledLocationFilter>
-            <StyledStarFilter>
-                <Image src={"/assets/svgs/funnel.svg"} alt={"funnel"} width={18} height={18}/>
-                <StyledFilterSpan>별점으로 필터링하기</StyledFilterSpan>
+            <StyledStarFilter value={filtering} onChange={e => setFiltering(e.target.value)}>
+                <option value="NONE">필터링 옵션</option>
+                <option value="STARHIGH">별점 높은 순</option>
+                <option value="STARLOW">별점 낮은 순</option>
+                <option value="HARD">난이도 높은 순</option>
+                <option value="EASY">난이도 낮은 순</option>
             </StyledStarFilter>
             <SearchingBar>
-                <StyledInput type="text"/>
+                <StyledInput type="text" value={search} onChange={e => setSearch(e.target.value)} onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                        handleSearchChanged();
+                    }
+                }}/>
                 <Image style={{position: "absolute", right: "12px", top: "14px"}} src={"/assets/svgs/search.svg"}
-                       alt={"search"} width={20} height={20}/>
+                       alt={"search"} width={20} height={20} onClick={handleSearchChanged}/>
             </SearchingBar>
         </StyledFilteringBar>
         <CardContainer>
@@ -155,7 +203,7 @@ const StarContainer = styled.div`
 const StarValue = styled.span`
     ${pretendardFont.PRETENDARD_p4};
     color: #959595;
-    
+
 `
 
 const CardPlace = styled.span`
@@ -194,7 +242,7 @@ const StyledCard = styled.div<{ $imageUrl: string }>`
     height: 250px;
     border-radius: 10px;
     position: relative;
-    box-shadow: 0px 2px 2px 0px rgba(95,95,95,0.5);
+    box-shadow: 0 2px 2px 0 rgba(95, 95, 95, 0.5);
 `
 const StyledFilteringLogo = styled.div`
     display: flex;
@@ -255,23 +303,32 @@ const StyledAcceptingSpan = styled.span`
     color: #999999
 `
 
-const StyledLocationFilter = styled.div`
-    display: flex;
-    height: fit-content;
+const StyledLocationFilter = styled.select`
+    height: 40px;
+    width: 120px;
+    border: none;
     gap: 14px;
-    padding: 6px 8px;
-    align-items: center;
     color: #999999;
     border-bottom: 1px solid;
+    ${font.BOLD_p3};
+    padding: 0 8px;
 `
 
-const StyledStarFilter = styled.div`
-    display: flex;
-    align-items: center;
-    height: fit-content;
-    border: 1px solid;
+const StyledStarFilter = styled.select`
+    height: 40px;
+    width: 150px;
+    gap: 14px;
+    padding-left: 35px;
     color: #999999;
-    padding: 6px 10px;
+    border: 1px solid;
+    ${font.BOLD_p3};
+
+    appearance: none;
+    background-image: url("/assets/svgs/funnel.svg");
+    background-repeat: no-repeat;
+    background-size: 26px 26px;
+    background-position: 6px;
+
 `
 
 const StyledFilteringBar = styled.div`
@@ -287,7 +344,7 @@ const StyledFilteringBar = styled.div`
 
 const StyledFilterSpan = styled.span`
     align-content: center;
-    ${font.BOLD_p2};
+    ${font.BOLD_p3};
     color: #999999;
 `
 
