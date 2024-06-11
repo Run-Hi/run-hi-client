@@ -159,7 +159,9 @@ const BoldInfo = styled.span`
 `
 
 const ReviewContents = styled.span`
-    ${boldFont.BOLD_p2};
+    ${pretendardFont.PRETENDARD_p2};
+    font-weight: bold;
+    
 `
 
 const ReviewInfo = styled.span`
@@ -172,7 +174,7 @@ const ReviewTitle = styled.span`
     
 `
 const ReviewText = styled.div`
-    width: 80%;
+    width: 60%;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -183,15 +185,14 @@ const ReviewStar = styled.div`
     display: flex;
     flex-direction: column;
     ${font.BOLD_H3};
-    padding-left: 19%;
     padding-right: 3%;
 `
 
 const ReviewCard = styled.div`
     display: flex;
     padding: 5% 0;
-    
     border-bottom: 1px solid #F0F0F0;
+    justify-content: center;
 `
 
 const DetailReview = styled.div`
@@ -199,6 +200,8 @@ const DetailReview = styled.div`
 `
 
 const StarRateDiv = styled.div`
+    display: flex;
+    align-items: center;
 `
 const DetailStarSpan = styled.span`
     ${boldFont.BOLD_p1};
@@ -206,8 +209,8 @@ const DetailStarSpan = styled.span`
 
 const DetailStar = styled.div`
     display: flex;
-    align-content: center;
-    gap: 6px;
+    align-items: center;
+    gap: 10px;
 `
 
 const VerticalRate = styled.div`
