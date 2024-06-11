@@ -1,12 +1,14 @@
 import Logo from "@/components/assets/logo"
 import styled from "styled-components";
 import font from "@/components/fonts/boldFont";
+import Link from "next/link";
 
 const Header = () => {
     return <StyledHeader>
         <Logo
             width={130}
             height={40}
+            onClick={() => window.location.href = "/"}
         />
         <StyledString>마이페이지</StyledString>
     </StyledHeader>
