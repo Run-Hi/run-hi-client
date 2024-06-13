@@ -28,16 +28,6 @@ const Marathon = () => {
                     </IntroduceSentence>
                 </Introduce>
             </Info>
-            <SelectionBar>
-                <RoundFilter>
-                    <FilterSpan>회차 선택하기</FilterSpan>
-                    <Image src={"/assets/svgs/arrow.svg"} alt={"arrow"} width={20} height={20}/>
-                </RoundFilter>
-                <AcceptingReview>
-                    <ReviewMessage>이 마라톤에 참여한 경험이 있다면?</ReviewMessage>
-                    <ReviewButton>리뷰하기!</ReviewButton>
-                </AcceptingReview>
-            </SelectionBar>
             <TotalReviewBar>
                 <TotalStarRate>
                     <TotalStarNumber>3.9</TotalStarNumber>
@@ -93,6 +83,16 @@ const Marathon = () => {
                     </VerticalRate>
                 </DetailStarRate>
             </TotalReviewBar>
+            <SelectionBar>
+                {/*<RoundFilter>*/}
+                {/*    <FilterSpan>회차 선택하기</FilterSpan>*/}
+                {/*    <Image src={"/assets/svgs/arrow.svg"} alt={"arrow"} width={20} height={20}/>*/}
+                {/*</RoundFilter>*/}
+                <AcceptingReview>
+                    <ReviewMessage>이 마라톤에 참여한 경험이 있다면?</ReviewMessage>
+                    <ReviewButton>리뷰하기!</ReviewButton>
+                </AcceptingReview>
+            </SelectionBar>
             <DetailReview>
                 <ReviewCard>
                     <ReviewStar>
@@ -248,7 +248,7 @@ const TotalReviewBar = styled.div`
     display: flex;
     height: 20vh;
     width: 90%;
-    margin: 0 auto;
+    margin: 30px auto;
     padding: 0 6%;
     align-items: center;
     justify-content: center;
@@ -276,7 +276,7 @@ const ReviewButton = styled.div`
     height: fit-content;
     padding: 10px;
     border-radius: 10px;
-    margin-left: auto;
+    margin-right: auto;
 `
 const RoundFilter = styled.div`
     display: flex;
@@ -299,7 +299,7 @@ const SelectionBar = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
-    height: 14vh;
+    height: 10vh;
     padding: 0 8vw;
     align-items: center;
 `
@@ -307,29 +307,32 @@ const IntroduceSentence = styled.div`
     display: flex;
     flex-direction: column;
     padding: 3vh 0;
-    gap: 14px;
+    gap: 18px;
 `
 const IntroduceContent = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 8px;
 `
 
 const IntroduceContentButton = styled.span`
     background-color: #F0F0F0;
     color: #FD51A7;
-    ${font.BOLD_H4};
+    ${font.BOLD_p2};
     width: fit-content;
     height: fit-content;
-    padding: 10px;
-    border-radius: 10px;
-    margin-left: auto;
+    padding: 5px;
+    border-radius: 7px;
 `
 
 const IntroduceContentBlack = styled.span`
-    ${font.BOLD_H4}
+    ${font.BOLD_p1}
 `
 
 const IntroduceContentGray = styled.span`
     color: #999999;
-    ${font.BOLD_H4}
+    ${font.BOLD_p1}
 `
 
 const UnderLine = styled.div`
