@@ -5,28 +5,43 @@ import pretendardFont from "@/components/fonts/pretendardFont";
 import StarRate from "@/components/starRate";
 import {useRouter, useSearchParams} from "next/navigation";
 import {useEffect, useState} from "react";
+import Api from "@/components/api";
+import Link from "next/link";
 
 
 const List = () => {
-
-    const [place, setPlace] = useState('')
+    const cardSetUp: MarathonCard[] = []
+    const [location, setLocation] = useState('')
     const [accepting, setAccepting] = useState(false)
     const [filtering, setFiltering] = useState('')
     const [search, setSearch] = useState('')
+    const [marathonList, setMarathonList] = useState(cardSetUp)
+
+    const params = useSearchParams();
 
 
     useEffect(() => {
+        const sendingParams = {accepting: accepting, location: location, filtering: filtering};
+        const marathons = async () => await Api.get("/api/marathons", {params: sendingParams});
 
-    }, [place, accepting, filtering])
+        marathons().then(r => {
+            setMarathonList(r.data)
+        })
+    }, [location, accepting, filtering])
 
     const router = useRouter();
-    const params = useSearchParams();
 
     const handleSearchChanged = () => {
         setAccepting(false)
-        setPlace('전체')
+        setLocation('전체')
         setFiltering("NONE")
-        router.push(`/?name=` + encodeURIComponent(search));
+
+        const marathons = async () => await Api.get("/api/marathons/search?name=" + search);
+
+        marathons().then(r => {
+            setMarathonList(r.data)
+        })
+
     };
 
     return <StyledMainLayout>
@@ -37,7 +52,7 @@ const List = () => {
             </StyledFilteringLogo>
             <StyledErrorButton>
                 <Image src={"/assets/svgs/warning.svg"} alt={"warning"} width={20} height={20}/>
-                <StyledWarningSpan>에러/개선사항 제보</StyledWarningSpan>
+                <Link style={{textDecorationLine: "none"}} href="https://walla.my/v/DVDsODKEVVper4CZtBbp" target="_blank"><StyledWarningSpan>에러/개선사항 제보</StyledWarningSpan></Link>
             </StyledErrorButton>
         </StyledFilteringTitle>
         <StyledFilteringBar>
@@ -46,8 +61,8 @@ const List = () => {
                     <Image src={"/assets/svgs/unChecked.svg"} alt={"unchecked"} width={18} height={18}/>}
                 <StyledAcceptingSpan>접수중</StyledAcceptingSpan>
             </StyledLocationButton>
-            <StyledLocationFilter value={place} onChange={e => {
-                setPlace(e.target.value)
+            <StyledLocationFilter value={location} onChange={e => {
+                setLocation(e.target.value)
             }}>
                 <option>전체</option>
                 <option>서울</option>
@@ -69,8 +84,8 @@ const List = () => {
             </StyledLocationFilter>
             <StyledStarFilter value={filtering} onChange={e => setFiltering(e.target.value)}>
                 <option value="NONE">필터링 옵션</option>
-                <option value="STARHIGH">별점 높은 순</option>
-                <option value="STARLOW">별점 낮은 순</option>
+                <option value="STAR_HIGH">별점 높은 순</option>
+                <option value="STAR_LOW">별점 낮은 순</option>
                 <option value="HARD">난이도 높은 순</option>
                 <option value="EASY">난이도 낮은 순</option>
             </StyledStarFilter>
@@ -85,77 +100,26 @@ const List = () => {
             </SearchingBar>
         </StyledFilteringBar>
         <CardContainer>
-            <Card card={{
-                imageUrl: "https://img4.yna.co.kr/etc/inner/KR/2019/04/17/AKR20190417165100063_01_i_P2.jpg",
-                title: "",
-                id: 1,
-                isOpen: false,
-                location: "a",
-                star: 3.5,
-                starCount: "500+"
-            }}/>
-            <Card card={{
-                imageUrl: "https://img4.yna.co.kr/etc/inner/KR/2019/04/17/AKR20190417165100063_01_i_P2.jpg",
-                title: "",
-                id: 1,
-                isOpen: false,
-                location: "a",
-                star: 3.5,
-                starCount: "500+"
-            }}/>
-            <Card card={{
-                imageUrl: "https://img4.yna.co.kr/etc/inner/KR/2019/04/17/AKR20190417165100063_01_i_P2.jpg",
-                title: "",
-                id: 1,
-                isOpen: false,
-                location: "a",
-                star: 3.5,
-                starCount: "500+"
-            }}/>
-            <Card card={{
-                imageUrl: "https://img4.yna.co.kr/etc/inner/KR/2019/04/17/AKR20190417165100063_01_i_P2.jpg",
-                title: "",
-                id: 1,
-                isOpen: false,
-                location: "a",
-                star: 3.5,
-                starCount: "500+"
-            }}/>
-            <Card card={{
-                imageUrl: "https://img4.yna.co.kr/etc/inner/KR/2019/04/17/AKR20190417165100063_01_i_P2.jpg",
-                title: "",
-                id: 1,
-                isOpen: false,
-                location: "a",
-                star: 3.5,
-                starCount: "500+"
-            }}/>
-            <Card card={{
-                imageUrl: "https://img4.yna.co.kr/etc/inner/KR/2019/04/17/AKR20190417165100063_01_i_P2.jpg",
-                title: "",
-                id: 1,
-                isOpen: false,
-                location: "a",
-                star: 3.5,
-                starCount: "500+"
-            }}/>
+            {marathonList.map(marathon =>
+                <Card key={marathon.id} card={marathon}/>
+            )}
 
         </CardContainer>
     </StyledMainLayout>
 }
 
-type Card = {
-    imageUrl: string,
-    title: string,
-    id: number,
-    isOpen: boolean,
+type MarathonCard = {
+    name: string,
     location: string,
-    star: number,
-    starCount: string
+    imageUrl: string,
+    isAccepting: boolean,
+    totalReview: number,
+    reviewCount: string
+    id: number,
 }
 
 type CardDto = {
-    card: Card
+    card: MarathonCard
 }
 
 const CardContainer = styled.div`
@@ -171,14 +135,15 @@ const Card = (props: CardDto) => {
     return <StyledCard $imageUrl={props.card.imageUrl}>
         <CardBar>
             <CardBarTop>
-                <CardBarTitle>기적의 마라톤</CardBarTitle>
-                <CardBarSigning>접수중</CardBarSigning>
+                <CardBarTitle>{props.card.name}</CardBarTitle>
+                <CardBarSigning
+                    accepting={props.card.isAccepting}>{props.card.isAccepting ? "접수중" : "마감"}</CardBarSigning>
             </CardBarTop>
             <CardBarBottom>
-                <CardPlace>경주</CardPlace>
+                <CardPlace>{props.card.location}</CardPlace>
                 <StarContainer>
-                    <StarRate AvrRate={67} height={19} width={20}/>
-                    <StarValue>({props.card.starCount})</StarValue>
+                    <StarRate AvrRate={props.card.totalReview} height={19} width={20}/>
+                    <StarValue>({props.card.reviewCount})</StarValue>
                 </StarContainer>
             </CardBarBottom>
 
@@ -190,9 +155,9 @@ const CardBarTitle = styled.span`
     ${font.BOLD_H4}
 `
 
-const CardBarSigning = styled.span`
-    ${pretendardFont.PRETENDARD_p3}
-    color: #FD51A7
+const CardBarSigning = styled.span<{ accepting: boolean }>`
+    ${pretendardFont.PRETENDARD_p3};
+    color: ${props => props.accepting ? "#FD51A7" : "#999999"}
 `
 const StarContainer = styled.div`
     display: flex;
@@ -342,22 +307,9 @@ const StyledFilteringBar = styled.div`
     align-items: center;
 `
 
-const StyledFilterSpan = styled.span`
-    align-content: center;
-    ${font.BOLD_p3};
-    color: #999999;
-`
-
 const StyledFilterTitleSpan = styled.span`
     align-content: center;
     ${font.BOLD_H3};
 `
-
-const testData = [
-    {
-        "asdf": 100
-    }
-]
-
 
 export default List

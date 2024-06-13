@@ -33,4 +33,5 @@ const StyledString = styled.span`
     right: 30px;
     top: 20px;
     ${font.BOLD_H5};
+    color: white;
 `

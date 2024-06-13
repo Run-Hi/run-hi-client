@@ -11,8 +11,7 @@ function StarRate(props: Star) {
     const AVR_RATE = props.AvrRate;
     const width = props.width
     const height = props.height
-    const STAR_IDX_ARR = ['first', 'second', 'third', 'fourth', 'last'];
-    const [ratesResArr, setRatesResArr] = useState([0, 0, 0, 0, 0]);
+    const ratesResArr = [0, 0, 0, 0, 0];
     const calcStarRates = () => {
         let tempStarRatesArr = [0, 0, 0, 0, 0];
         let starVerScore = (AVR_RATE * 70) / 100;
@@ -26,17 +25,14 @@ function StarRate(props: Star) {
         return tempStarRatesArr;
     };
 
-    useEffect(() => {
-        setRatesResArr(calcStarRates)
-    }, [])
     return (
         <StarRateWrap>
-            {STAR_IDX_ARR.map((item, idx) => {
+            {calcStarRates().map((item, idx) => {
                 return <span className='star_icon' key={`${item}_${idx}`}>
                     <svg xmlns='http://www.w3.org/2000/svg' width={width} height={height} viewBox='0 0 14 13'
                          fill='#cacaca'>
                         <clipPath id={`${item}StarClip`}>
-                            <rect width={`${ratesResArr[idx]}`} height='39'/>
+                            <rect width={item} height='39'/>
                         </clipPath>
                         <path
                             id={`${item}Star`}
