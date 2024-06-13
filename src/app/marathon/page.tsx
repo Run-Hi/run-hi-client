@@ -7,11 +7,11 @@ import Marathon from "@/components/page/marathon";
 
 const Page = () => {
     return (
-        <div>
+        <>
             <Header/>
             <Marathon/>
             <Footer/>
-        </div>
+        </>
     );
 };
 
