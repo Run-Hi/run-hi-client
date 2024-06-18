@@ -95,15 +95,17 @@ const List = () => {
                         handleSearchChanged();
                     }
                 }}/>
-                <Image style={{position: "absolute", right: "12px", top: "14px"}} src={"/assets/svgs/search.svg"}
+                <Image style={{position: "absolute", right: "12px", top: "14px", cursor: "pointer"}} src={"/assets/svgs/search.svg"}
                        alt={"search"} width={20} height={20} onClick={handleSearchChanged}/>
             </SearchingBar>
         </StyledFilteringBar>
         <CardContainer>
-            {marathonList.map(marathon =>
-                <Card key={marathon.id} card={marathon}/>
+            {
+                marathonList.map(marathon =>
+                <Link key={marathon.id} href={"/marathons/" + marathon.id} style={{color: "inherit"}}>
+                    <Card {...marathon}/>
+                </Link>
             )}
-
         </CardContainer>
     </StyledMainLayout>
 }
@@ -118,32 +120,27 @@ type MarathonCard = {
     id: number,
 }
 
-type CardDto = {
-    card: MarathonCard
-}
-
 const CardContainer = styled.div`
     width: 100%;
-    justify-content: center;
     height: 70%;
-    padding: 20px 100px;
+    padding: 20px 150px;
     gap: 50px;
     display: flex;
     flex-wrap: wrap;
 `
-const Card = (props: CardDto) => {
-    return <StyledCard $imageUrl={props.card.imageUrl}>
+const Card = (props: MarathonCard) => {
+    return <StyledCard $imageUrl={props.imageUrl}>
         <CardBar>
             <CardBarTop>
-                <CardBarTitle>{props.card.name}</CardBarTitle>
+                <CardBarTitle>{props.name}</CardBarTitle>
                 <CardBarSigning
-                    accepting={props.card.isAccepting}>{props.card.isAccepting ? "접수중" : "마감"}</CardBarSigning>
+                    accepting={props.isAccepting}>{props.isAccepting ? "접수중" : "마감"}</CardBarSigning>
             </CardBarTop>
             <CardBarBottom>
-                <CardPlace>{props.card.location}</CardPlace>
+                <CardPlace>{props.location}</CardPlace>
                 <StarContainer>
-                    <StarRate AvrRate={props.card.totalReview} height={19} width={20}/>
-                    <StarValue>({props.card.reviewCount})</StarValue>
+                    <StarRate AvrRate={props.totalReview} height={19} width={20}/>
+                    <StarValue>({props.reviewCount})</StarValue>
                 </StarContainer>
             </CardBarBottom>
 
@@ -244,7 +241,6 @@ const StyledInput = styled.input`
     height: 50px;
     width: 15vw;
     right: 10px;
-    border-radius: 10px;
     border: 1px solid #999999;
     outline: none;
     padding-left: 5px;
@@ -252,6 +248,7 @@ const StyledInput = styled.input`
 `
 
 const StyledLocationButton = styled.div`
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 2px;
@@ -269,6 +266,7 @@ const StyledAcceptingSpan = styled.span`
 `
 
 const StyledLocationFilter = styled.select`
+    cursor: pointer;
     height: 40px;
     width: 120px;
     border: none;
@@ -282,6 +280,7 @@ const StyledLocationFilter = styled.select`
 const StyledStarFilter = styled.select`
     height: 40px;
     width: 150px;
+    cursor: pointer;
     gap: 14px;
     padding-left: 35px;
     color: #999999;

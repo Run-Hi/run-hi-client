@@ -2,12 +2,13 @@
 
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import List from "@/components/page/list";
 import styled from "styled-components";
+import List from "@/page/list";
 
 const Home = () => {
     return (
         <>
+            <title>RUNHI</title>
             <Header/>
             <Layout>
                 <List/>

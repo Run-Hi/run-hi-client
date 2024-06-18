@@ -4,7 +4,7 @@ const fontGenerator = (
     lineHeight: number,
     letterSpacing: number
 ) => ({
-    fontFamily: `Pretendard-Regular`,
+    fontFamily: `Pretendard-Bold`,
     fontWeight: weight,
     fontSize: `${size}rem`,
     lineHeight: `${lineHeight}%`,

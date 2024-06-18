@@ -8,7 +8,7 @@ type LogoProps = {
 
 const Logo = ({width, height, ...props}: LogoProps) => {
     return (
-        <div>
+        <div style={{cursor: "pointer"}}>
             <Image
                 src="/assets/svgs/logo.svg"
                 alt="Logo"
