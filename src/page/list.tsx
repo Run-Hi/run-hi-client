@@ -3,7 +3,7 @@ import Image from "next/image";
 import font from "@/components/fonts/boldFont";
 import pretendardFont from "@/components/fonts/pretendardFont";
 import StarRate from "@/components/starRate";
-import {useRouter, useSearchParams} from "next/navigation";
+import {useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 import Api from "@/components/api";
 import Link from "next/link";
@@ -16,8 +16,6 @@ const List = () => {
     const [filtering, setFiltering] = useState('')
     const [search, setSearch] = useState('')
     const [marathonList, setMarathonList] = useState(cardSetUp)
-
-    const params = useSearchParams();
 
 
     useEffect(() => {
@@ -52,7 +50,8 @@ const List = () => {
             </StyledFilteringLogo>
             <StyledErrorButton>
                 <Image src={"/assets/svgs/warning.svg"} alt={"warning"} width={20} height={20}/>
-                <Link style={{textDecorationLine: "none"}} href="https://walla.my/v/DVDsODKEVVper4CZtBbp" target="_blank"><StyledWarningSpan>에러/개선사항 제보</StyledWarningSpan></Link>
+                <Link style={{textDecorationLine: "none"}} href="https://walla.my/v/DVDsODKEVVper4CZtBbp"
+                      target="_blank"><StyledWarningSpan>에러/개선사항 제보</StyledWarningSpan></Link>
             </StyledErrorButton>
         </StyledFilteringTitle>
         <StyledFilteringBar>
@@ -95,17 +94,18 @@ const List = () => {
                         handleSearchChanged();
                     }
                 }}/>
-                <Image style={{position: "absolute", right: "12px", top: "14px", cursor: "pointer"}} src={"/assets/svgs/search.svg"}
+                <Image style={{position: "absolute", right: "12px", top: "14px", cursor: "pointer"}}
+                       src={"/assets/svgs/search.svg"}
                        alt={"search"} width={20} height={20} onClick={handleSearchChanged}/>
             </SearchingBar>
         </StyledFilteringBar>
         <CardContainer>
             {
                 marathonList.map(marathon =>
-                <Link key={marathon.id} href={"/marathons/" + marathon.id} style={{color: "inherit"}}>
-                    <Card {...marathon}/>
-                </Link>
-            )}
+                    <Link key={marathon.id} href={"/marathons/" + marathon.id} style={{color: "inherit"}}>
+                        <Card {...marathon}/>
+                    </Link>
+                )}
         </CardContainer>
     </StyledMainLayout>
 }
