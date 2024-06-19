@@ -125,7 +125,7 @@ const Marathon = () => {
                     <VerticalRate>
                         <DetailStar>
                             <StarRateDiv>
-                                <DetailStarSpan>{(marathon.totalReview / 20).toFixed(1)}</DetailStarSpan>
+                                <DetailStarSpan>{(marathon.level / 20).toFixed(1)}</DetailStarSpan>
                                 <Image src={"/assets/svgs/level.svg"} alt={"star"} width={19} height={19}/>
                             </StarRateDiv>
                             <DetailStarSpan>코스 난이도</DetailStarSpan>
