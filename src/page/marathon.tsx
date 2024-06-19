@@ -24,6 +24,8 @@ type Marathon = {
     imageUrl: string,
     isAccepting: boolean,
     conductDate: Date,
+    startDate: Date,
+    endDate: Date,
     totalReview: number,
     reviewCount: string,
     id: number,
@@ -55,6 +57,8 @@ const Marathon = () => {
         imageUrl: "",
         isAccepting: false,
         conductDate: new Date(2006, 7, 4),
+        startDate: new Date(2006, 7, 4),
+        endDate: new Date(2006, 7, 4),
         totalReview: 0,
         reviewCount: "0",
         id: 1,
@@ -86,6 +90,9 @@ const Marathon = () => {
         })
     }, [])
 
+    const startDate = new Date(marathon.startDate)
+    const end = new Date(marathon.endDate)
+    const conduct = new Date(marathon.conductDate)
     return (
         <MarathonLayout>
             <Info>
@@ -97,9 +104,9 @@ const Marathon = () => {
                     <IntroduceSentence>
                         <IntroduceContent><IntroduceContentGray>지역:</IntroduceContentGray><IntroduceContentBlack>
                             {marathon.location}</IntroduceContentBlack></IntroduceContent>
-                        <IntroduceContent><IntroduceContentGray>진행일:</IntroduceContentGray><IntroduceContentBlack>{`${new Date(marathon.conductDate).getFullYear()}년 ${new Date(marathon.conductDate).getMonth()}월 ${new Date(marathon.conductDate).getDay()}일`}</IntroduceContentBlack></IntroduceContent>
+                        <IntroduceContent><IntroduceContentGray>진행일:</IntroduceContentGray><IntroduceContentBlack>{conduct.getFullYear()}년 {conduct.getMonth() + 1}월 {conduct.getDate()}일</IntroduceContentBlack></IntroduceContent>
                         <IntroduceContent><IntroduceContentGray>모집
-                            기간:</IntroduceContentGray><IntroduceContentBlack>{`${new Date(marathon.conductDate).getFullYear()}년 ${new Date(marathon.conductDate).getMonth()}월 ${new Date(marathon.conductDate).getDay()}일`}</IntroduceContentBlack></IntroduceContent>
+                            기간:</IntroduceContentGray><IntroduceContentBlack>{`${startDate.getFullYear()}년 ${startDate.getMonth() + 1}월 ${startDate.getDate()}일`} ~ {end.getFullYear()}년 {end.getMonth() + 1}월 {end.getDate()}일</IntroduceContentBlack></IntroduceContent>
                         <IntroduceContent><IntroduceContentGray>참가
                             비용:</IntroduceContentGray><IntroduceContentBlack>{marathon.fee}원</IntroduceContentBlack></IntroduceContent>
                         <IntroduceContent><IntroduceContentGray>신청
