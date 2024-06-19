@@ -130,6 +130,15 @@ const CardContainer = styled.div`
 `
 const Card = (props: MarathonCard) => {
     return <StyledCard $imageUrl={props.imageUrl}>
+        <Image
+            src={props.imageUrl}
+            alt={"alt"}
+            layout="fill"
+            objectFit="cover"
+            quality={100}
+            unoptimized={true}
+            style={{borderRadius: "10px"}}
+        />
         <CardBar>
             <CardBarTop>
                 <CardBarTitle>{props.name}</CardBarTitle>
@@ -143,9 +152,7 @@ const Card = (props: MarathonCard) => {
                     <StarValue>({props.reviewCount})</StarValue>
                 </StarContainer>
             </CardBarBottom>
-
         </CardBar>
-
     </StyledCard>
 }
 const CardBarTitle = styled.span`
@@ -198,7 +205,6 @@ const CardBar = styled.div`
     flex-direction: column;
 `
 const StyledCard = styled.div<{ $imageUrl: string }>`
-    background-image: url(${props => props.$imageUrl});
     background-size: cover;
     width: 350px;
     height: 250px;
