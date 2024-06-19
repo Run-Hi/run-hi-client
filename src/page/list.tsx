@@ -27,8 +27,6 @@ const List = () => {
         })
     }, [location, accepting, filtering])
 
-    const router = useRouter();
-
     const handleSearchChanged = () => {
         setAccepting(false)
         setLocation('전체')
@@ -130,15 +128,6 @@ const CardContainer = styled.div`
 `
 const Card = (props: MarathonCard) => {
     return <StyledCard $imageUrl={props.imageUrl}>
-        <Image
-            src={props.imageUrl}
-            alt={"alt"}
-            layout="fill"
-            objectFit="cover"
-            quality={100}
-            unoptimized={true}
-            style={{borderRadius: "10px"}}
-        />
         <CardBar>
             <CardBarTop>
                 <CardBarTitle>{props.name}</CardBarTitle>
@@ -205,6 +194,7 @@ const CardBar = styled.div`
     flex-direction: column;
 `
 const StyledCard = styled.div<{ $imageUrl: string }>`
+    background-image: url(${props => props.$imageUrl});
     background-size: cover;
     width: 350px;
     height: 250px;
