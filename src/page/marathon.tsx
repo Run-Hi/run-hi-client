@@ -37,7 +37,6 @@ type Marathon = {
     waterStation: number,
     souvenir: number,
     medal: number,
-    fee: number,
     applyUrl: string
 }
 
@@ -70,7 +69,6 @@ const Marathon = () => {
         waterStation: 0,
         souvenir: 0,
         medal: 0,
-        fee: 0,
         applyUrl: "url"
     }
 
@@ -116,8 +114,6 @@ const Marathon = () => {
                         <IntroduceContent><IntroduceContentGray>진행일:</IntroduceContentGray><IntroduceContentBlack>{conduct.getFullYear()}년 {conduct.getMonth() + 1}월 {conduct.getDate()}일</IntroduceContentBlack></IntroduceContent>
                         <IntroduceContent><IntroduceContentGray>모집
                             기간:</IntroduceContentGray><IntroduceContentBlack>{`${startDate.getFullYear()}년 ${startDate.getMonth() + 1}월 ${startDate.getDate()}일`} ~ {end.getFullYear()}년 {end.getMonth() + 1}월 {end.getDate()}일</IntroduceContentBlack></IntroduceContent>
-                        <IntroduceContent><IntroduceContentGray>참가
-                            비용:</IntroduceContentGray><IntroduceContentBlack>{marathon.fee}원</IntroduceContentBlack></IntroduceContent>
                         <IntroduceContent><IntroduceContentGray>신청
                             주소:</IntroduceContentGray><Link style={{textDecorationLine: "none"}}
                                                             href={marathon.applyUrl}
