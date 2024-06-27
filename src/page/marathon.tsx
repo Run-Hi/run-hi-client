@@ -8,6 +8,7 @@ import StarRate from "@/components/starRate";
 import Api from "@/components/api";
 import {usePathname, useRouter} from "next/navigation";
 import Link from "next/link";
+import Storage from "@/components/storage";
 
 
 type Review = {
@@ -90,6 +91,14 @@ const Marathon = () => {
         })
     }, [])
 
+    const didLogin = () => {
+        if (Storage.getItem("access_token") == undefined) {
+            window.location.href = "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=147422130144-3ujp0un0bemed62n2j9r03g2fad76num.apps.googleusercontent.com&response_type=token&redirect_uri=http://localhost:3000/auth&scope=profile%20email&service=lso&o2v=2&theme=glif&flowName=GeneralOAuthFlow&ddm=0"
+        } else {
+            window.location.href="/reviews/" + pathname
+        }
+    }
+
     const startDate = new Date(marathon.startDate)
     const end = new Date(marathon.endDate)
     const conduct = new Date(marathon.conductDate)
@@ -110,9 +119,11 @@ const Marathon = () => {
                         <IntroduceContent><IntroduceContentGray>참가
                             비용:</IntroduceContentGray><IntroduceContentBlack>{marathon.fee}원</IntroduceContentBlack></IntroduceContent>
                         <IntroduceContent><IntroduceContentGray>신청
-                            주소:</IntroduceContentGray><Link style={{textDecorationLine: "none"}} href={marathon.applyUrl} target="_blank"><IntroduceContentButton>클릭하기!</IntroduceContentButton></Link>
+                            주소:</IntroduceContentGray><Link style={{textDecorationLine: "none"}}
+                                                            href={marathon.applyUrl}
+                                                            target="_blank"><IntroduceContentButton>클릭하기!</IntroduceContentButton></Link>
                         </IntroduceContent>
-                </IntroduceSentence>
+                    </IntroduceSentence>
                 </Introduce>
             </Info>
             <TotalReviewBar>
@@ -177,7 +188,7 @@ const Marathon = () => {
                 {/*</RoundFilter>*/}
                 <AcceptingReview>
                     <ReviewMessage>이 마라톤에 참여한 경험이 있다면?</ReviewMessage>
-                    <Link style={{textDecorationLine: "none"}} href={"/reviews/" + pathname}><ReviewButton>리뷰하기!</ReviewButton></ Link>
+                    <ReviewButton onClick={didLogin}>리뷰하기!</ReviewButton>
                 </AcceptingReview>
             </SelectionBar>
             <DetailReview>
@@ -196,7 +207,7 @@ const ReviewCards = (review: Review) => {
         </ReviewStar>
         <ReviewText>
             <ReviewTitle>&quot;{review.title}&quot;</ReviewTitle>
-            <ReviewInfo>{new Date(review.createdDateTime).getFullYear() + "." + new Date(review.createdDateTime).getMonth() + "." + new Date(review.createdDateTime).getDay() }</ReviewInfo>
+            <ReviewInfo>{new Date(review.createdDateTime).getFullYear() + "." + new Date(review.createdDateTime).getMonth() + "." + new Date(review.createdDateTime).getDay()}</ReviewInfo>
             <BoldInfo>장점</BoldInfo>
             <ReviewContents>{review.pros}</ReviewContents>
             <BoldInfo>단점</BoldInfo>
@@ -321,6 +332,7 @@ const AcceptingReview = styled.div`
 `
 
 const ReviewButton = styled.div`
+    cursor: pointer;
     background-color: #F0F0F0;
     color: #FD51A7;
     ${font.BOLD_H4};

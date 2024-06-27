@@ -5,6 +5,8 @@ import Api from "@/components/api";
 import {number} from "prop-types";
 import font from "@/components/fonts/pretendardFont";
 import {usePathname} from "next/navigation";
+import Storage from "@/components/storage";
+import header from "@/components/header";
 
 type Review = {
     id: number,
@@ -37,6 +39,10 @@ const Review = () => {
     }
 
     useEffect(() => {
+        if (Storage.getItem("access_token") == undefined) {
+            window.location.href = "https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=147422130144-3ujp0un0bemed62n2j9r03g2fad76num.apps.googleusercontent.com&response_type=token&redirect_uri=http://localhost:3000/auth&scope=profile%20email&service=lso&o2v=2&theme=glif&flowName=GeneralOAuthFlow&ddm=0"
+        }
+
         const marathons = async () => await Api.get("/api/marathons/name/" + pathname);
 
         marathons().then(r => {
@@ -57,7 +63,14 @@ const Review = () => {
     }
 
     const Submit = async () => {
-        const marathons = async () => await Api.post("/api/reviews", review);
+        const marathons = async () => await Api.post(
+            "/api/reviews",
+            review,
+            {
+                headers: {
+                    Authorization: Storage.getItem("access_token")
+                }
+            });
         marathons().then(
             e => window.location.replace("/")
         ).catch(
