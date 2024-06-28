@@ -130,7 +130,7 @@ const Card = (props: MarathonCard) => {
     return <StyledCard $imageUrl={props.imageUrl}>
         <CardBar>
             <CardBarTop>
-                <CardBarTitle>{props.name}</CardBarTitle>
+                <CardBarTitle>{props.name.length > 15 ? props.name.slice(0, 15) + "..." : props.name }</CardBarTitle>
                 <CardBarSigning
                     accepting={props.isAccepting}>{props.isAccepting ? "접수중" : "마감"}</CardBarSigning>
             </CardBarTop>
