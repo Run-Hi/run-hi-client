@@ -28,7 +28,7 @@ const Header = () => {
         {isLoggedIn ?
             <StyledString onClick={clearLocalStorage}>로그아웃</StyledString> :
             <Link
-                href={"https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=147422130144-3ujp0un0bemed62n2j9r03g2fad76num.apps.googleusercontent.com&response_type=token&redirect_uri=http://localhost:3000/auth&scope=profile%20email&service=lso&o2v=2&theme=glif&flowName=GeneralOAuthFlow&ddm=0"}><StyledString>로그인 </StyledString></Link>
+                href={"https://accounts.google.com/o/oauth2/v2/auth/oauthchooseaccount?client_id=147422130144-3ujp0un0bemed62n2j9r03g2fad76num.apps.googleusercontent.com&response_type=token&redirect_uri=https://runhi.org/auth&scope=profile%20email&service=lso&o2v=2&theme=glif&flowName=GeneralOAuthFlow&ddm=0"}><StyledString>로그인 </StyledString></Link>
         }
     </StyledHeader>
 
